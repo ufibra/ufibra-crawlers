@@ -7,6 +7,7 @@
 
 from scrapy import signals
 
+from .utils import check_item
 
 class CrawlersSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -101,3 +102,15 @@ class CrawlersDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class CrawlersItemMiddleware(object):
+
+    def process_spider_output(self, response, result, spider):
+        # Check if the item is valid
+        for item in result:
+            try:
+                if check_item.is_valid(item):
+                    yield item
+            except Exception as e:
+                spider.logger.info(f'Item is not valid. Warning: {e}')
