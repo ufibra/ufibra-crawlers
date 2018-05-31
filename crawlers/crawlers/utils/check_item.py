@@ -2,13 +2,13 @@ import scrapy
 
 def is_valid(item):
     if not item or type(item) == scrapy.Request:
-        raise ValueError('Wrong type')
+        return True
     for key in item.keys():
         value = item[key]
         if not value:
-            raise ValueError('Value is None')
+            raise ValueError(f'{key.capitalize()} is None')
         if type(value) == str and len(value) <= 0:
-            raise ValueError('Value is empty')
+            raise ValueError(f'{key.capitalize()} is empty')
         if type(value) == int or type(float) and value == -1:
-            raise ValueError('Value is negative')
+            raise ValueError(f'{key.capitalize()} is negative')
     return True
