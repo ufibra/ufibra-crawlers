@@ -25,7 +25,8 @@ class WheyproteinMadrugaosuplementosSpider(scrapy.Spider):
             price = parse.parse_price(''.join(product_price))
             image = product.css('img ::attr(src)').extract_first()
             weight = parse.parse_weight(name)
-            item = self.to_item(store=self.store, name=name, price=price, image=image, weight=weight, category=product_type.WHEY_PROTEIN)
+            url = product.css('.product-image ::attr(href)').extract_first()
+            item = self.to_item(store=self.store, name=name, price=price, image=image, weight=weight, url=url, category=product_type.WHEY_PROTEIN)
             return item
 
     def next_page(self, response):
@@ -40,5 +41,6 @@ class WheyproteinMadrugaosuplementosSpider(scrapy.Spider):
         item['price'] = kwargs.get('price')
         item['image'] = kwargs.get('image')
         item['weight'] = kwargs.get('weight')
+        item['url'] = kwargs.get('url')
         item['category'] = kwargs.get('category')
         return item
