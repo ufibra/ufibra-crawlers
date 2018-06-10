@@ -1,7 +1,7 @@
 import re
 
-COMBO = 'COMBO'
-WHEY_PROTEIN = 'WHEY_PROTEIN'
+COMBO = 'combo'
+WHEY_PROTEIN = 'wheyprotein'
 
 def is_combo(text):
     if not text:
