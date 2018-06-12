@@ -39,6 +39,6 @@ class WheyproteinGsnsuplementosSpider(scrapy.Spider):
         item['price'] = kwargs.get('price')
         item['image'] = kwargs.get('image')
         item['weight'] = kwargs.get('weight')
-        item['url'] = kwargs.get('url')
         item['category'] = kwargs.get('category')
+        item['url'] = kwargs.get('url')
         return  item
