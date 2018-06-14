@@ -23,7 +23,8 @@ class WheyproteinGsnsuplementosSpider(scrapy.Spider):
         price = parse.parse_price(product.css('.product-off-price ::text').extract_first())
         image = product.css('.product-image > img::attr(data-src)').extract_first()
         weight = parse.parse_weight(name)
-        item = self.to_item(store=self.store, name=name, price=price, image=image, weight=weight, category=product_type.WHEY_PROTEIN)
+        url = 'https://www.gsnsuplementos.com.br' + product.css('a ::attr(href)').extract_first()
+        item = self.to_item(store=self.store, name=name, price=price, image=image, weight=weight, url=url, category=product_type.WHEY_PROTEIN)
         return item
 
     def next_page(self, response):
@@ -39,4 +40,5 @@ class WheyproteinGsnsuplementosSpider(scrapy.Spider):
         item['image'] = kwargs.get('image')
         item['weight'] = kwargs.get('weight')
         item['category'] = kwargs.get('category')
+        item['url'] = kwargs.get('url')
         return  item

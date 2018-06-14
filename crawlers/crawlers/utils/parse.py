@@ -34,7 +34,11 @@ def parse_number(text):
     text = text.strip()
     price = re.search('\d+,?\d*', text)
     if price:
-        return float(price.group(0).replace(',', '.'))
+        value = price.group(0).replace(',', '.')
+        if value.count('.') > 1:
+            return float(value.replace('.', '', 1))
+        else:
+            return float(value)
     return -1
 
 def parse_price(text):

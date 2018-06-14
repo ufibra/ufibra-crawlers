@@ -15,4 +15,5 @@ class ProductItem(scrapy.Item):
     image = scrapy.Field()
     weight = scrapy.Field()
     category = scrapy.Field()
+    url = scrapy.Field()
 
