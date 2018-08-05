@@ -1,7 +1,8 @@
 import scrapy
+from scrapy_splash import SplashRequest
 
 def is_valid(item):
-    if not item or type(item) == scrapy.Request:
+    if not item or type(item) == scrapy.Request or type(item) == SplashRequest:
         return True
     for key in item.keys():
         value = item[key]
