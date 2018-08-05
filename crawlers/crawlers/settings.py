@@ -10,11 +10,12 @@ import os
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+SPLASH_URL = 'http://localhost:8050'
+
 BOT_NAME = 'crawlers'
 
 SPIDER_MODULES = ['crawlers.spiders']
 NEWSPIDER_MODULE = 'crawlers.spiders'
-
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTM,, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
@@ -48,15 +49,18 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
+   'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
    'crawlers.middlewares.CrawlersSpiderMiddleware': 543,
    'crawlers.middlewares.CrawlersItemMiddleware': 560,
 }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'crawlers.middlewares.CrawlersDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+  'scrapy_splash.SplashCookiesMiddleware': 723,
+  'scrapy_splash.SplashMiddleware': 725,
+  'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -92,3 +96,6 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
